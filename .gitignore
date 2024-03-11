@@ -1,0 +1,16 @@
+# 忽略node_modules目录及其所有内容  
+node_modules/  
+  
+# 忽略dist目录及其所有内容  
+dist/  
+  
+# 忽略所有以.log结尾的文件  
+*.log  
+  
+# 忽略IDE配置文件  
+.vscode/  
+.idea/  
+  
+# 忽略编辑器产生的文件  
+*.swp  
+.DS_Store
