@@ -2,17 +2,26 @@
   <div class="preview_content">
     <template v-if="state.components.length > 0">
       <div v-for="item in state.components" :key="item.id">
-        <div>{{ item.id }}</div>
-        <button @click="deleteComponent(item)">删除</button>
+        <component :is="item.componentName"></component>
       </div>
     </template>
   </div>
 </template>
+<script>
+import { defineComponent } from "vue";
+import TitleText from "../components/titletext/index.vue";
+export default defineComponent({
+  components: {
+    TitleText, // 局部注册组件
+  },
+});
+</script>
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, reactive } from "vue";
 import state from "./store";
 import _ from "lodash";
-// console.log(state); //state树数据代理
+
+console.log(state); //state树数据代理
 // console.log(JSON.parse(JSON.stringify(state))); //是数据
 // console.log(state.setting)
 

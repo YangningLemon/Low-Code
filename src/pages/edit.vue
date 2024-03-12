@@ -2,7 +2,10 @@
   <div class="fl fl_jc_fs fl_ai_fs">
     <div class="edit_left">
       <template v-for="item in ToolsList" :key="item.id">
-        <div class="edit_tools_item flv fl_jc_c fl_ai_c">
+        <div
+          class="edit_tools_item flv fl_jc_c fl_ai_c"
+          @click="addComp(item.componentName)"
+        >
           <img :src="item.iconUrl" class="edit_tooles_item_icon" />
           <span class="edit_tools_item_title">{{ item.name }}</span>
           <span class="edit_tools_item_count">{{
@@ -36,7 +39,7 @@ import _ from "lodash";
 const ComponentMap = {
   TitleText: {
     name: "标题文本",
-    ComponentName: "TitleText",
+    componentName: "TitleText",
     styles: {
       testAline: "center",
       fontWeigth: "normal",
@@ -50,37 +53,37 @@ const ComponentMap = {
       url: "",
       text: "查看更多",
     },
-    image: {
-      name: "",
-      ComponentName: "Image",
-      value: "url",
-      styles: {
-        margin: "",
-        borderRadius: "",
-        boxShadow: "",
-      },
+  },
+  Image: {
+    name: "图片",
+    componentName: "Image",
+    value: "url",
+    styles: {
+      margin: "",
+      borderRadius: "",
+      boxShadow: "",
     },
-    Carousel: {
-      name: "轮播",
-      ComponentName: "Carousel",
-      // value:['',''],// "数组轮播",image实例，轮播组件只是在多个图片组件的基础上进行设置,组合组件
-      value: [
-        {
-          name: "",
-          ComponentName: "Image",
-          value: "url",
-          styles: {
-            margin: "",
-            borderRadius: "",
-            boxShadow: "",
-          },
+  },
+  Carousel: {
+    name: "轮播",
+    componentName: "Carousel",
+    // value:['',''],// "数组轮播",image实例，轮播组件只是在多个图片组件的基础上进行设置,组合组件
+    value: [
+      {
+        name: "",
+        componentName: "Image",
+        value: "url",
+        styles: {
+          margin: "",
+          borderRadius: "",
+          boxShadow: "",
         },
-      ],
-      styles: {
-        margin: "",
-        borderRadius: "",
-        boxShadow: "",
       },
+    ],
+    styles: {
+      margin: "",
+      borderRadius: "",
+      boxShadow: "",
     },
   },
 };
@@ -159,6 +162,7 @@ onMounted(() => {
 .edit_tools_item {
   width: 80px;
   height: 88px;
+  cursor: pointer;
 }
 .edit_tooles_item_icon {
   width: 32px;
