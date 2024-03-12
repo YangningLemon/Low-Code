@@ -1,8 +1,21 @@
 <template>
   <div class="preview_content">
     <template v-if="state.components.length > 0">
-      <div v-for="item in state.components" :key="item.id">
-        <component :is="item.componentName"></component>
+      <div
+        v-for="item in state.components"
+        :key="item.id"
+        @click="selectComponent(item.id)"
+      >
+        <div class="component_title">{{ item.name }}</div>
+        <div
+          class="selected_component_box"
+          v-if="currentComponentId === item.id"
+        ></div>
+        <div
+          class="selected_component_opt"
+          v-if="currentComponentId === item.id"
+        ></div>
+        <component :is="item.componentName" :data="item"></component>
       </div>
     </template>
   </div>
@@ -17,9 +30,11 @@ export default defineComponent({
 });
 </script>
 <script setup>
-import { onMounted, reactive } from "vue";
+import { onMounted, reactive, ref } from "vue";
 import state from "./store";
 import _ from "lodash";
+
+const currentComponentId = ref("");
 
 console.log(state); //state树数据代理
 // console.log(JSON.parse(JSON.stringify(state))); //是数据
@@ -44,6 +59,12 @@ const initMessage = () => {
   });
 };
 
+//选中的盒子
+const selectComponent = (cid) => {
+  currentComponentId.value = cid;
+  parent.postMessage({ message: "selectComponent", data: { id: cid } });
+};
+
 const deleteComponent = (item) => {
   console.log("00000000000", state.components);
   // state.components = [];
@@ -62,3 +83,34 @@ onMounted(() => {
   initMessage();
 });
 </script>
+<style scoped>
+.preview_content {
+  width: 430px;
+  height: 750px;
+  background-color: #fff;
+}
+
+.component_title {
+  /* 要用内容撑开盒子，所以使用 box-sizing: content-box;*/
+  box-sizing: content-box;
+  padding: 4px 7px;
+  background-color: #155bd4;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #fff;
+  font-size: 14px;
+  transform: translateX(-110%);
+}
+</style>
+<style>
+body {
+  background-color: #f7f8fa;
+}
+#root {
+  display: flex;
+  justify-content: center;
+}
+</style>

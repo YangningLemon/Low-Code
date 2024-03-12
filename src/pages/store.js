@@ -112,17 +112,16 @@ export const ToolsList = [
 ]
 
 export const ToolItemCount = reactive({
-    title_text: '0',
-    image: '0',
-    carousel: '0',
-    store: '0',
-    coupon: '0',
-    product: '0',
-    menu_management: '0',
-    announcement: '0',
-    course: '0',
-    flash_sale: '0',
-    video: '0',
-    search: '0',
-    voice: '0'
+    TitleText: '0',
+    Image: '0',
+    Carousel: '0',
+    Coupon: '0',
+    Product: '0',
+    MenuManagement: '0',
+    Announcement: '0',
+    Course: '0',
+    FlashSale: '0',
+    Video: '0',
+    Search: '0',
+    Soice: '0'
 })

@@ -4,12 +4,12 @@
       <template v-for="item in ToolsList" :key="item.id">
         <div
           class="edit_tools_item flv fl_jc_c fl_ai_c"
-          @click="addComp(item.componentName)"
+          @click="addComp(item.componentName, item.limit)"
         >
           <img :src="item.iconUrl" class="edit_tooles_item_icon" />
           <span class="edit_tools_item_title">{{ item.name }}</span>
           <span class="edit_tools_item_count">{{
-            ToolItemCount[item.id] + "/" + item.limit
+            ToolItemCount[item.componentName] + "/" + item.limit
           }}</span>
         </div>
       </template>
@@ -40,9 +40,10 @@ const ComponentMap = {
   TitleText: {
     name: "标题文本",
     componentName: "TitleText",
+    value: "这里是标题文本",
     styles: {
-      testAline: "center",
-      fontWeigth: "normal",
+      textAlign: "left",
+      fontWeight: "normal",
       color: "#333",
       backgroundColor: "#fff",
     },
@@ -88,15 +89,16 @@ const ComponentMap = {
   },
 };
 
-const addComp = (key) => {
+const addComp = (key, limit) => {
   // console.log(ComponentMap[key]);
-  if (ComponentMap[key]) {
+  if (ComponentMap[key] && ToolItemCount[key] < limit) {
     const cid = s4() + s4(); //两次拼接随机数，基本不会再同一个组件总重复了
     // console.log("id-------", cid);
     const cData = { ...ComponentMap[key] };
     cData.id = cid;
     // console.log(cData);
     state.components.push(cData);
+    ToolItemCount[key]++;
     // window.postMessage(cData);
     const childIframe = document.getElementById(
       "edit_preview_iframe"
