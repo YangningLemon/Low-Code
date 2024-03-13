@@ -62,7 +62,8 @@ const initMessage = () => {
 //选中的盒子
 const selectComponent = (cid) => {
   currentComponentId.value = cid;
-  parent.postMessage({ message: "selectComponent", data: { id: cid } });
+  console.log(cid);
+  // parent.postMessage({ message: "selectComponent", data: { id: cid } });
 };
 
 const deleteComponent = (item) => {
@@ -113,6 +114,16 @@ onMounted(() => {
   position: absolute;
   right: -9px;
   top: 13px;
+}
+
+.selected_component_box {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 999;
+  width: 100%;
+  height: 100%;
+  border: 2px solid #155bd4;
 }
 </style>
 <style>
