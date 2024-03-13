@@ -104,6 +104,16 @@ onMounted(() => {
   font-size: 14px;
   transform: translateX(-110%);
 }
+
+/* 三角样式 */
+.component_title::after {
+  content: "";
+  border: 5px solid transparent;
+  border-left-color: #155bd4;
+  position: absolute;
+  right: -9px;
+  top: 13px;
+}
 </style>
 <style>
 body {
