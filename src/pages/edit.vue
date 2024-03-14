@@ -23,9 +23,13 @@
     </div>
     <div class="edit_right">
       <!-- 因为每个组件的配置项是不一样的，所以可以做成一个组件 -->
+      <div class="edit_right_type">
+        {{ selectedComponent.name }}
+      </div>
       <component
         :is="selectedComponent.configComponentName"
         :data="selectedComponent"
+        @onChange="onChange"
       ></component>
     </div>
   </div>
@@ -129,6 +133,18 @@ const addComp = (key, limit) => {
   }
 };
 
+//配置数据变更函数
+const onChange = (key, value) => {
+  console.log("value-=====", key, value);
+  // console.log("selectedComponent", selectedComponent);
+  selectedComponent.value[key] = value;
+  childIframe.postMessage({
+    message: "updateComponent",
+    data: JSON.parse(JSON.stringify(selectedComponent.value)),
+  });
+  // childIframe.postMessage({ message: "updateComponent", data:  });
+};
+
 //随机函数生成id
 //toString=====utf8编码
 const s4 = () => {
@@ -174,6 +190,7 @@ onMounted(() => {
   grid-template-columns: 1fr 1fr;
   grid-gap: 10px;
   align-content: start;
+  margin-top: 24px;
 }
 .edit_main {
   /* 这个类的盒子元素，在flex中按照剩余空间全部匹配，如果其他也有，按照数字比例分配剩余空间*/
@@ -212,5 +229,13 @@ onMounted(() => {
   font-size: 12px;
   margin-top: 4px;
   color: #7d7e80;
+}
+.edit_right_type {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 24px;
+  color: #323233;
+  padding: 24px 16px;
+  border-bottom: 1px solid #f2f4f6;
 }
 </style>

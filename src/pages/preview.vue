@@ -57,6 +57,20 @@ const initMessage = () => {
       parent = event.source;
       state.components.push(data);
     }
+
+    if (
+      message === "updateComponent" &&
+      data &&
+      data.id === currentComponentId.value
+    ) {
+      parent = event.source;
+      state.components.forEach((item, index) => {
+        if (item.id === data.id) {
+          state.components[index] = { ...data };
+          return;
+        }
+      });
+    }
     console.log("收到消息", state.components);
   });
 };
