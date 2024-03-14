@@ -13,9 +13,6 @@
           }}</span>
         </div>
       </template>
-      <!-- <button @click="addComp('TitleText')">标题文本</button>
-      <button @click="addComp('Image')">图片</button>
-      <button @click="addComp('Carousel')">轮播</button> -->
     </div>
     <div class="edit_main">
       <iframe
@@ -24,11 +21,30 @@
         class="edit_iframe"
       ></iframe>
     </div>
-    <div class="edit_right">3</div>
+    <div class="edit_right">
+      <!-- 因为每个组件的配置项是不一样的，所以可以做成一个组件 -->
+      <component
+        :is="selectedComponent.configComponentName"
+        :data="selectedComponent"
+      ></component>
+    </div>
   </div>
 </template>
+
+<script>
+import { defineComponent } from "vue";
+import TitleTextConfig from "../components/titletext/config.vue";
+console.log("TitleTextConfig==", TitleTextConfig);
+export default defineComponent({
+  components: {
+    TitleTextConfig, // 局部注册组件
+  },
+});
+</script>
+
+
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import state, { ToolsList, ToolItemCount } from "./store";
 import _ from "lodash";
 // console.log(state); //state树数据代理
@@ -36,10 +52,13 @@ import _ from "lodash";
 // console.log(state.setting);
 // 以上的数据是代理
 
+const selectedComponent = ref({});
+
 const ComponentMap = {
   TitleText: {
     name: "标题文本",
     componentName: "TitleText",
+    configComponentName: "TitleTextConfig",
     value: "这里是标题文本",
     styles: {
       textAlign: "left",
@@ -58,6 +77,7 @@ const ComponentMap = {
   Image: {
     name: "图片",
     componentName: "Image",
+    configComponentName: "ImageConfig",
     value: "url",
     styles: {
       margin: "",
@@ -68,6 +88,7 @@ const ComponentMap = {
   Carousel: {
     name: "轮播",
     componentName: "Carousel",
+    configComponentName: "CarouselConfig",
     // value:['',''],// "数组轮播",image实例，轮播组件只是在多个图片组件的基础上进行设置,组合组件
     value: [
       {
@@ -130,6 +151,17 @@ onMounted(() => {
       console.log("收到子iframe的信息", data.id);
       // deleteComponent(data.id);
     }
+
+    if (message === "selectComponent" && data && data.id) {
+      parent = event.source;
+      console.log("收到子iframe配置组件的信息", data.id);
+      // deleteComponent(data.id);
+      state.components.forEach((item) => {
+        if (item.id === data.id) {
+          selectedComponent.value = item;
+        }
+      });
+    }
   });
 });
 </script>
@@ -146,7 +178,7 @@ onMounted(() => {
 .edit_main {
   /* 这个类的盒子元素，在flex中按照剩余空间全部匹配，如果其他也有，按照数字比例分配剩余空间*/
   flex: 1;
-  background-color: #f7f8fa;
+  background-color: #e3d9d9;
   height: 100vh;
   min-width: 400px;
 }

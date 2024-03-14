@@ -20,6 +20,7 @@
     </template>
   </div>
 </template>
+
 <script>
 import { defineComponent } from "vue";
 import TitleText from "../components/titletext/index.vue";
@@ -29,6 +30,7 @@ export default defineComponent({
   },
 });
 </script>
+
 <script setup>
 import { onMounted, reactive, ref } from "vue";
 import state from "./store";
@@ -63,7 +65,7 @@ const initMessage = () => {
 const selectComponent = (cid) => {
   currentComponentId.value = cid;
   console.log(cid);
-  // parent.postMessage({ message: "selectComponent", data: { id: cid } });
+  parent.postMessage({ message: "selectComponent", data: { id: cid } });
 };
 
 const deleteComponent = (item) => {
@@ -128,7 +130,8 @@ onMounted(() => {
 </style>
 <style>
 body {
-  background-color: #f7f8fa;
+  /* background-color: #f7f8fa; */
+  background-color: #e3d9d9;
 }
 #root {
   display: flex;
