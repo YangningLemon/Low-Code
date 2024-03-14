@@ -51,6 +51,7 @@ export default defineComponent({
 import { onMounted, ref } from "vue";
 import state, { ToolsList, ToolItemCount } from "./store";
 import _ from "lodash";
+import db from "../db";
 // console.log(state); //state树数据代理
 // console.log(JSON.parse(JSON.stringify(state))); //是数据
 // console.log(state.setting);
@@ -130,6 +131,9 @@ const addComp = (key, limit) => {
     ).contentWindow;
     // childIframe.postMessage(cData);
     childIframe.postMessage({ message: "addComponent", data: cData });
+
+    //添加数据到indexdb
+    db.states.add({ ...cData, create_time: Date.now() });
   }
 };
 
