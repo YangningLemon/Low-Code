@@ -38,7 +38,7 @@ const onChangeValue = (key) => {
 };
 
 // 在setup函数中，你可以通过props访问定义的属性
-console.log(props.data); // 打印出父组件传递的msg值
+console.log(props.data); // 打印出父组件传递的msg值,用于调试
 </script>
 <style scoped >
 </style>
